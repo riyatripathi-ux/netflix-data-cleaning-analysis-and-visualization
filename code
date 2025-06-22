@@ -1,0 +1,47 @@
+# 📦 Install dependencies (run once)
+# pip install pandas matplotlib seaborn
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 🚀 1. Load dataset
+df = pd.read_csv('netflix_movies_tv_till_2025.csv')
+
+# ℹ️ Quick overview
+print(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
+print(df.dtypes)
+df.head()
+# 🧹 2. Data Cleaning
+# 2.1 Remove duplicates & missing critical fields
+df.drop_duplicates(inplace=True)
+df.dropna(subset=['title','type','date_added'], inplace=True)
+
+# 2.2 Convert date_added to datetime
+df['date_added'] = pd.to_datetime(df['date_added'])
+
+# 2.3 Clean & split genre tags in 'listed_in'
+df['listed_in'] = df['listed_in'].fillna('')
+df['genres'] = df['listed_in'].str.split(', ')
+df_exploded = df.explode('genres').reset_index(drop=True)
+# 🔍 3. EDA & Visualizations
+plt.figure(figsize=(8, 5))
+sns.countplot(data=df, x='type', palette='Set2')
+plt.title("Movies vs TV Shows")
+plt.xlabel("")
+plt.show()
+
+plt.figure(figsize=(12, 6))
+df_exploded['genres'].value_counts().nlargest(10).plot(kind='barh')
+plt.gca().invert_yaxis()
+plt.title("Top 10 Genres")
+plt.xlabel("Count")
+plt.show()
+
+yearly = df.groupby(df['date_added'].dt.year).size()
+plt.figure(figsize=(10, 5))
+yearly.plot(marker='o')
+plt.title("Netflix Content Added by Year")
+plt.xlabel("Year")
+plt.ylabel("Count")
+plt.show()
