@@ -51,3 +51,7 @@ CSV Data Handling
 
 ✅ Conclusion
 This project gives a comprehensive overview of Netflix's content offerings and growth patterns. It also highlights the importance of data cleaning in real-world datasets and shows how visual storytelling can enhance data interpretation
+![top_genres](https://github.com/user-attachments/assets/306519c4-8b43-4efd-922a-fc9c52783b4d)
+![movies_vs_tvshows (1)](https://github.com/user-attachments/assets/cb916b77-b825-4b00-a320-15031e9b95b7)
+
+
